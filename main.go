@@ -1,11 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"path"
-)
+var z *int
 
 func main() {
-	str := path.Join("ss", "kkk")
-	fmt.Println(str)
+	a := 1
+	func() {
+		// fmt.Println(a)
+		a = a + 1
+	}()
+	// fmt.Println(a)
 }
