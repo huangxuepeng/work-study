@@ -2,6 +2,9 @@
 1. 一个镜像是由多个只读层组成的
     - 这些只读层除了最下面的不指向外, 其他的都指向父级
     - 展示给用户的只有一个文件系统的原因是隐藏多层的存在, 使用的技术是使用统一文件系统技术, 将多层文件整合成一个文件系统.
+#### 分层的好处
+1. 共享资源: 有多个镜像都是从` base `镜像构建而来的， 那么只需要在宿主机的磁盘上和内存中各保存一份镜像, 每一层都可以被共享.
+    - base镜像
 ### 当删除一个正在运行或者已经停止的容器的镜像报错的原因
 报错信息
 > Error response from daemon: conflict: unable to remove repository reference "hxp-test:v1" (must force) - container 6df4e796bf15 is using its referenced image 0964cd5e00ce
