@@ -43,9 +43,10 @@ func zigzagLevelOrder(root *TreeNode) (arr [][]int) {
 	return arr
 }
 func main() {
-	arr := []int{1, 2, 3, 4, 5, 6, 7, 9}
-	for i := 0; i < len(arr)/2; i++ {
-		arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
+	a := 10
+	if a < 0 {
+		fmt.Println(a)
+	} else {
+
 	}
-	fmt.Println(arr)
 }

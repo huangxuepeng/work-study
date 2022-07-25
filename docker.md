@@ -20,3 +20,21 @@
 - 容器已经停止 进入2
 2. 将停止的容器删除
 3. 删除镜像
+
+### Dockerfile在书写的时候可能会有多个run
+```
+1. 执行多个run (ex1)
+    FROM busybox
+    RUN echo This is the A > a
+    RUN echo This is the B > b
+    RUN echo This is the C > c
+2. 执行一个run (ex2)
+    FROM busybox
+    RUN echo This is the A > a &&\
+        echo This is the B > b &&\
+        echo This is the C > c
+```
+1. 当run删除由前一个run(yum install nano && yum clean all) 添加的东西时, 第二种方法显然是正确的.
+2. 层应该只是在前一层之上添加一个差异, 所以后一层如果对前一层没有删除的操作的时候, 两种方法之间没有太多的磁盘空间节省;
+3. 镜像下载的时候, 镜像的每层是并行下载的, 所以理论上ex1打包出来的镜像下载的时候理论会快一点
+4. 如果添加第四句的时候(echo this is the D > d) 并且在本地重建, 由于缓存, ex1会构建的更快, ex2会再次运行这四个命令
