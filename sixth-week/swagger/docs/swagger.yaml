@@ -1,31 +1,71 @@
 definitions:
-  main.Response:
+  main.ListResponse:
     properties:
-      id:
+      code:
         type: integer
-      name:
+      list:
+        items:
+          $ref: '#/definitions/main.LogRecord'
+        type: array
+    type: object
+  main.LogRecord:
+    properties:
+      createTime:
+        type: integer
+      dataName:
+        type: string
+      logType:
+        type: integer
+      operatorTime:
+        type: integer
+      srcType:
+        type: integer
+      uid:
+        type: integer
+      userId:
         type: string
     type: object
 info:
   contact: {}
 paths:
-  /test/{id}:
+  //api/v1/log/{page}/{limit}/{userId}/{mod}/{type}:
     get:
       consumes:
       - application/json
-      description: 测试函数
+      description: 获取用户所有的操作日志
       parameters:
-      - description: id
-        in: query
-        name: id
+      - description: 页码
+        in: path
+        name: page
         required: true
+        type: integer
+      - description: 每页多少条信息
+        in: path
+        name: limit
+        required: true
+        type: integer
+      - description: 用户id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      - description: 模块 SrcType
+        in: query
+        name: mod
         type: string
+      - description: 操作 Type
+        in: path
+        name: type
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Response'
-      summary: 测试接口
+            $ref: '#/definitions/main.ListResponse'
+      summary: 获取日志列表
+      tags:
+      - 操作审计
 swagger: "2.0"
