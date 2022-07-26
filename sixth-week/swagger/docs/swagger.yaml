@@ -1,0 +1,31 @@
+definitions:
+  main.Response:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /test/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 测试函数
+      parameters:
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Response'
+      summary: 测试接口
+swagger: "2.0"
