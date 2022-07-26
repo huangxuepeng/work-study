@@ -1,52 +1,37 @@
 package main
 
-import "fmt"
+import "sort"
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
-func zigzagLevelOrder(root *TreeNode) (arr [][]int) {
-	dao := func(arr []int) []int {
-		for i := 0; i < len(arr)/2; i++ {
-			arr[i], arr[len(arr)-1-i] = arr[len(arr)-1-i], arr[i]
+func merge(intervals [][]int) [][]int {
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	max := func(a, b int) int {
+		if a > b {
+			return a
 		}
-		return arr
+		return b
 	}
-	if root == nil {
-		return arr
-	}
-	q := []*TreeNode{root}
-	for i := 0; len(q) > 0; i++ {
-		p := []*TreeNode{}
-		a := []int{}
-		for _, v := range q {
-			node := v
-			a = append(a, node.Val)
-			if node.Left != nil {
-				p = append(p, node.Left)
-			}
-			if node.Right != nil {
-				p = append(p, node.Right)
-			}
-
+	arr := [][]int{}
+	pre := intervals[0]
+	for i := 1; i < len(intervals); i++ {
+		if intervals[i][0] > pre[1] {
+			pre = intervals[i]
+			arr = append(arr, pre)
+		} else {
+			pre[1] = max(pre[1], intervals[i][1])
 		}
-		q = p
-		// 表示是奇数, 实现倒序
-		if len(arr)%2 != 0 {
-			a = dao(a)
-		}
-		arr = append(arr, a)
+		
 	}
+	arr = append(arr, pre)
 	return arr
 }
-func main() {
-	a := 10
-	if a < 0 {
-		fmt.Println(a)
-	} else {
-
+for i := 1; i < len(intervals); i++ {
+	cur := intervals[i]
+	if prev[1] < cur[0] { // 没有一点重合
+		res = append(res, prev)
+		prev = cur
+	} else { // 有重合
+		prev[1] = max(prev[1], cur[1])
 	}
 }
