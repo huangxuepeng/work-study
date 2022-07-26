@@ -1,49 +1,19 @@
-## application
-### 服务仓库  SERVICE_REPOSITORY
-- 主动导入仓库
-- 服务新建的时候自动导入
-- 对已有的服务进行操作
-### 服务管理   SERVICE_MANAGEMENT management
-- 对服务进行停止启动操作
-### 镜像管理  IMAGE_MANAGEMENT
-- 对镜像的操作信息的储存
-### 服务目录   SERVICE_DIRECTORY
-- 用户查看所有的服务列表
-### 服务打包  SERVICE_PACK
-- 新建服务
-- 对已有的服务进行/操作
-### 本地数据单元    // 
-- 添加/导入数据单元
-- 导入外部的数据单元
-- 用户对已有的数据单元进行操作
-### 计算资源管理    COMPUTER_RESOURCE
-- 编辑标签
-- 调度策略进行选择  *** (可能会让服务半分钟中内不能使用)
-### 网络资源管理  NET_RESOURCE_MANAGEMENT
-- 添加网络 (网络出现问题可能)
-- 网路操作
-### 用户管理  USER_MANAGEMENT
-- 对用户的信息修改，密码重置，用户删除的操作（登入登出操作）
-### 角色管理   ROLE_MANAGEMENT
-- 对角色名称的编辑以及删除
-### 能力模型 （权限信息） ABLE_MODELS
-- 用户的权限范围（用户能够操作到的数据），以及管理员对用户权限的设置
-<!-- ### 组件管理
-- 资源配置文件
-- docker 镜像管理
-- shell 脚本
-- 用户对ec组件的修改, 删除 -->
-### 平台设置   PLATFORM_SET
-- 基础设置
-- 公告管理
-- 认证中心
-### 平台信息 PLATFORM_INFO
-- 管理员上传许可证以及下载请求文件
+### 功能概述
+fhmc-operator用于读写用户操作日志，目前主要记录用户的登入登出操作以及用户对服务的启停、修改配置等操作
+![](./%E5%9B%BE%E7%89%87.jpg)
 
-## uc 用户登录登出
-## um 用户管理
-// 登录记录
-message LogRecord {
+### http接口
+http接口主要提供以下两种能力
+- 读取操作记录
+  - 操作记录列表将分页进行返回
+  - 请求参数包括页码、还有limit
+- 写操作记录
+  - 提供特殊情况，可以通过http请求写入操作记录
+同时提供rpc接口
+- 写操作记录
+  - 主要建议用户通过grpc接口写入操作日志
+
+  message LogRecord {
   string uid = 1;
   enum LogType{
     LOGIN = 0;
@@ -67,16 +37,16 @@ message LogRecord {
 	  UPDATA_DATA = 18;
 	  DELETE_DATA = 19;
 	  UPDATE_LABLE = 20;
-	  SELECT_SCHEDULING_POLICY = 21;
+	  EMPTY_NODE  = 21;
 	  ADD_NET = 22;
 	  UPDATE_NET = 23;
 	  DELETE_NET = 24;
 	  UPDATE_USRINFO = 25;
 	  DELETE_USER = 26;
-	  PASSWORD_RESET = 27;
+	  PASSWORD_RESETS = 27;
 	  ADD_ROLE = 28;
 	  UPDATE_ROLE = 29;
-	  DELETE_RROLE = 30;
+	  DELETE_ROLE = 30;
 	  ADD_USER_PERMISSION = 31;
 	  UPDATE_USER_PERMISSION = 32;
 	  DELETE_USER_PERMISSION = 33;
@@ -85,6 +55,8 @@ message LogRecord {
 	  CERTIFICATION_CENTER = 36;
 	  UPLOAD_LICENSE = 37;
 	  REQUEST_DOWNLOAD_FILE = 38;
+    NOT_SCHEDULABLE = 39;
+    SCHEDULABLE = 40;
   }
   LogType type = 2;
   // 来源，可以是uc/um/application

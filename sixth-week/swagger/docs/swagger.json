@@ -1,0 +1,109 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "//api/v1/log/{page}/{limit}/{userId}/{mod}/{type}": {
+            "get": {
+                "description": "获取用户所有的操作日志",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "操作审计"
+                ],
+                "summary": "获取日志列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页多少条信息",
+                        "name": "limit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "模块 SrcType",
+                        "name": "mod",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "操作 Type",
+                        "name": "type",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.ListResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.ListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.LogRecord"
+                    }
+                }
+            }
+        },
+        "main.LogRecord": {
+            "type": "object",
+            "properties": {
+                "createTime": {
+                    "type": "integer"
+                },
+                "dataName": {
+                    "type": "string"
+                },
+                "logType": {
+                    "type": "integer"
+                },
+                "operatorTime": {
+                    "type": "integer"
+                },
+                "srcType": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
