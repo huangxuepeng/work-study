@@ -1,24 +1,21 @@
 package main
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
-// func TestMain_Min(t *testing.T) {
-// 	uu := min(1, 2)
-// 	fmt.Println(uu)
-// }
-
-// 压力测试
-func BenchmarkHello(b *testing.B) {
+func BenchmarkDir(b *testing.B) {
+	add := Sumer{
+		tt: 1,
+	}
 	for i := 0; i < b.N; i++ {
-		fmt.Sprintf("hello")
+		add.Add(10, 20)
 	}
 }
 
-// 重置定时器
-func BenchmarkBigLen(b *testing.B) {
-	big := NewBig()
-
+func BenchmarkInterface(b *testing.B) {
+	add := Sumer{
+		tt: 1,
+	}
+	for i := 0; i < b.N; i++ {
+		Sum(add).Add(10, 20)
+	}
 }

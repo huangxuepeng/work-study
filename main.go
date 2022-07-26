@@ -2,29 +2,27 @@ package main
 
 import (
 	"fmt"
-	"log"
-
-	_ "github.com/go-sql-driver/mysql"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
-var (
-	DB *gorm.DB
-)
+type Sum interface {
+	Add(a, b int) int
+}
+type Sumer struct {
+	tt int
+}
+
+func (m Sumer) Add(a, b int) int {
+	return a + b
+}
 
 func main() {
-	// 线上
-	dsn := "root:123456@tcp(172.17.0.1:3306)/hxp?charset=utf8mb4&parseTime=True&loc=Local"
-	// 线下
-	// dsn := "root:123456@tcp(127.0.0.1:3306)/gin_wall?charset=utf8mb4&parseTime=True&loc=Local"
-	//全局模式
-	var err error
-	DB, err = gorm.Open(mysql.Open(dsn))
-	if err != nil {
-		log.Println("连接数据库失败")
-		return
+	addr := Sumer{
+		tt: 1,
 	}
-	fmt.Println("连接成功")
-
+	m := Sum(addr)
+	q := m.Add(10, 20) //实现了接口调用(并且runtime.convT32主动在堆上分配内存)
+	/*
+		test.go:21:13: q escapes to heap
+	*/
+	fmt.Println(q)
 }
