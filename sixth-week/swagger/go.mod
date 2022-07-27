@@ -7,7 +7,7 @@ require (
 	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe
 	github.com/swaggo/gin-swagger v1.5.1
 	github.com/swaggo/swag v1.8.1
-	gopkg.eicas.io/fhmc-pro/business/fhmc-apis v1.4.11
+	gopkg.eicas.io/fhmc-pro/business/fhmc-apis v1.4.12-0.20220727015201-1831a61b09b5
 )
 
 require (
@@ -38,8 +38,8 @@ require (
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.7 // indirect
-	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
-	google.golang.org/grpc v1.29.1 // indirect
+	google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c // indirect
+	google.golang.org/grpc v1.38.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
