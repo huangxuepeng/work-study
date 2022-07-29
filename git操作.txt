@@ -2,3 +2,5 @@
 删除本地分支 git branch -d 分支名
 
 新建分支并且去新建的分支上  git checkout -b 分支名
+基于一个分支新建分支  git checkout -b newbranch origin/oldbranch
+          push到仓库  git push origin newbranch
