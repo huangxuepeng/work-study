@@ -64,6 +64,28 @@
 ## docker Daemon
 1. 它是docker的守护进程,Docker Client通过命令行与Docker Daemon 通信, 完成Docker相关操作.
 2. 主要功能是: 镜像管理, 镜像构建, REST API, 身份验证, 安全, 核心网络以及编排
+### 工作机制
+1. 可以认为是通过docker server 模块接受docker client的请求, 并且在engine中处理请求, 然后根据类型, 创建出指定的job并且运行.
+### 启动流程
+1. docker daemon和docker client 的启动都是通过可执行文件来完成的, 所以二者的过程相似, 二者运行的时候通过flag参数解析二者的区别, 并且各自执行自己的.
+2. 
+### 总结
+1. 宏观上: mainDaemon中创建一个daemon进程,使得docker daemon可以正常进行.
+2. 功能上: mainDaemon 的主要功能是生成docker的运行环境; 服务于docker client, 接受请求并且处理
+3. 细节上的步骤实现: 
+    - daemon的配置初始化
+        - 定义一个String类型的flag参数
+        - 该参数的名称是 "p"或者"-pidfile"
+        - 该flag的默认值为"/var/run/docker.pid"(进程的pid), 并将该值绑定在变量config.Pidfile上 
+    - 命令行flag参数检查
+        - docker 命令经过flag参数解析后, docker判断剩余的参数是否为0. 若为0, 表示启动命令无误, 如果不为0, 就会退出程序.
+    - 创建engine对象
+    - 设置engine的信号捕获及处理方法
+    - 加载builtins
+        - docker daemon运行过程中, 注册一些任务, 这部分任务一般于容器的运行无关, 与Docker Daemon的运行时信息有关.
+    - 使用goroutine加载daemon对象并且运行
+    - 打印docker 版本及驱动信息
+    - job之"serveapi"的创建与运行
 ## docker 容器之间进行通信
 ### 通过容器ip访问
 ### 通过宿主机的ip:port访问
@@ -73,4 +95,3 @@
 1. docker 的bridge 自定义网络之间默认是有域名解析的;
 2. docker 的bridge自定义网络与系统自带的网桥之间默认是由解析的
 3. docker 系统自带的网桥之间默认是没有解析的
-
