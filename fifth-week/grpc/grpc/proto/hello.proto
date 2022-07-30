@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+// 包名
+package test;
+
+option go_package="";
+
+service Greets {
+    // rpc SayHello (HelloRequest) returns (HelloReply){}
+    // 服务端流式
+    rpc SayHello (HelloRequest) returns (stream HelloReply){}
+}
+
+// 参数内容
+message HelloRequest {
+    string name = 1;
+    string message = 2;
+}
+
+message HelloReply {
+    string name = 1;
+    string message = 2;
+}

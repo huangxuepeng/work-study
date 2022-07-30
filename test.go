@@ -1,28 +1,46 @@
 package main
 
-import "sort"
+import (
+	"errors"
+	"fmt"
+	"io"
+)
 
-func merge(intervals [][]int) [][]int {
-	sort.Slice(intervals, func(i, j int) bool {
-		return intervals[i][0] < intervals[j][0]
-	})
-	max := func(a, b int) int {
-		if a > b {
-			return a
-		}
-		return b
-	}
-	arr := [][]int{}
-	pre := intervals[0]
-	for i := 1; i < len(intervals); i++ {
-		if intervals[i][0] > pre[1] {
-			pre = intervals[i]
-			arr = append(arr, pre)
+// 定义一个 Ustr 类型（以 string 为基类型）
+type Ustr string
+
+// 实现 Ustr 类型的 Read 方法
+func (s Ustr) Read(p []byte) (n int, err error) {
+	i, ls, lp := 0, len(s), len(p)
+	for ; i < ls && i < lp; i++ {
+		// 将小写字母转换为大写字母，然后写入 p 中
+		if s[i] >= 'a' && s[i] <= 'z' {
+			p[i] = s[i] + 'A' - 'a'
 		} else {
-			pre[1] = max(pre[1], intervals[i][1])
+			p[i] = s[i]
 		}
+<<<<<<< HEAD
 
 	}
 	arr = append(arr, pre)
 	return arr
+=======
+	}
+	// 根据读取的字节数设置返回值
+	switch i {
+	case lp:
+		return i, nil
+	case ls:
+		return i, io.EOF
+	default:
+		return i, errors.New("Read Fail")
+	}
+}
+func main() {
+	us := Ustr("hello world!")
+	buf := make([]byte, 32)
+	n, err := io.ReadFull(us, buf)
+	fmt.Println(string(buf))
+	fmt.Println(n, err)
+>>>>>>> f3397ff6cdc0c9b0933a42b4dfa2f76392c688ff
 }
