@@ -21,17 +21,8 @@ func merge(intervals [][]int) [][]int {
 		} else {
 			pre[1] = max(pre[1], intervals[i][1])
 		}
-		
+
 	}
 	arr = append(arr, pre)
 	return arr
-}
-for i := 1; i < len(intervals); i++ {
-	cur := intervals[i]
-	if prev[1] < cur[0] { // 没有一点重合
-		res = append(res, prev)
-		prev = cur
-	} else { // 有重合
-		prev[1] = max(prev[1], cur[1])
-	}
 }
