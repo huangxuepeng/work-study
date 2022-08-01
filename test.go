@@ -19,6 +19,12 @@ func (s Ustr) Read(p []byte) (n int, err error) {
 		} else {
 			p[i] = s[i]
 		}
+<<<<<<< HEAD
+
+	}
+	arr = append(arr, pre)
+	return arr
+=======
 	}
 	// 根据读取的字节数设置返回值
 	switch i {
@@ -36,4 +42,5 @@ func main() {
 	n, err := io.ReadFull(us, buf)
 	fmt.Println(string(buf))
 	fmt.Println(n, err)
+>>>>>>> f3397ff6cdc0c9b0933a42b4dfa2f76392c688ff
 }
