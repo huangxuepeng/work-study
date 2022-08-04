@@ -1,12 +1,7 @@
 package main
 
-import (
-	"os/exec"
-	"sync"
-)
-
-var wg sync.WaitGroup
+import "fmt"
 
 func main() {
-	ss := exec.Cmd()
+	fmt.Println("测试pr")
 }
