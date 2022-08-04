@@ -1,6 +1,16 @@
 删除分支远程 git push origin --delete 分支
 删除本地分支 git branch -d 分支名
 
-新建分支并且去新建的分支上  git checkout -b 分支名
 基于一个分支新建分支  git checkout -b newbranch origin/oldbranch
           push到仓库  git push origin newbranch
+
+rebase场景: 
+http://jartto.wang/2018/12/11/git-rebase/
+        合并多次的提交记录: 
+            例: 合并4次记录: 首先使用git rebase -i HEAD~4
+            然后会出现四条信息, 将后三个的pick 改成 s 即可, 退出完成
+        分支合并的现象: 
+            例: 原先有一个master分支, 你需要基于master分支新建一个自己的分支例如(hxp)
+            合并master代码, 首先需要git rebase master 
+            如果出现了错误, 需要去处理冲突, 处理完之后需要进行一次git add . 不需要再进行commit了
+            处理完之后你还可以进行 git rebase --continue
