@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "sixth-week/swagger/docs"
-
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -21,13 +19,14 @@ func main() {
 // @Tags 操作审计
 // @accept json
 // @Produce json
-// @Param page path int true "页码"
+// @Param page path []int true "页码"
 // @Param limit path int true "每页多少条信息"
 // @Param userId path int true "用户id"
 // @Param mod query string false "模块 SrcType"
 // @Param type path int true "操作 Type"
+// @Failure 400 {object} IDD {"Id":100}  "能力模型不存在"
 // @Success 200 {object} ListResponse
-// @Router //api/v1/log/{page}/{limit}/{userId}/{mod}/{type} [get]
+// @Router /test/{id} [get]
 func test(c *gin.Context) {
 	var d IDD
 	if err := c.ShouldBind(&d); err != nil {
@@ -37,9 +36,9 @@ func test(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(200, gin.H{
-		"code": 200,
-		"Msg":  "测试成功",
+	c.JSON(200, Response{
+		Id:   23,
+		Name: "sjansjk",
 	})
 }
 

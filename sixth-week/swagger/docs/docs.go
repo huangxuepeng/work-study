@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "//api/v1/log/{page}/{limit}/{userId}/{mod}/{type}": {
+        "/test/{id}": {
             "get": {
                 "description": "获取用户所有的操作日志",
                 "consumes": [
@@ -31,7 +31,10 @@ const docTemplate = `{
                 "summary": "获取日志列表",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
                         "description": "页码",
                         "name": "page",
                         "in": "path",
@@ -71,12 +74,26 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/main.ListResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Id\":100}  \"能力模型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/main.IDD"
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
+        "main.IDD": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "main.ListResponse": {
             "type": "object",
             "properties": {

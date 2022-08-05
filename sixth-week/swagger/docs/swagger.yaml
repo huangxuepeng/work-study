@@ -1,4 +1,9 @@
 definitions:
+  main.IDD:
+    properties:
+      id:
+        type: integer
+    type: object
   main.ListResponse:
     properties:
       code:
@@ -28,7 +33,7 @@ definitions:
 info:
   contact: {}
 paths:
-  //api/v1/log/{page}/{limit}/{userId}/{mod}/{type}:
+  /test/{id}:
     get:
       consumes:
       - application/json
@@ -36,9 +41,11 @@ paths:
       parameters:
       - description: 页码
         in: path
+        items:
+          type: integer
         name: page
         required: true
-        type: integer
+        type: array
       - description: 每页多少条信息
         in: path
         name: limit
@@ -65,6 +72,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/main.ListResponse'
+        "400":
+          description: Id":100}  "能力模型不存在
+          schema:
+            $ref: '#/definitions/main.IDD'
       summary: 获取日志列表
       tags:
       - 操作审计
