@@ -1,0 +1,1 @@
+go run cmd/main/main.go -etcd-ca D:/download/test/etcd.crt -etcd-key D:/download/test/etcd.cli-key.pem -etcd-cert D:/download/test/etcd.cli.crt -etcd-endpoints https://host1:2379,https://host2:2379,https://host3:2379  
