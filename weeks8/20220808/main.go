@@ -1,26 +1,13 @@
 package main
 
-import (
-	"fmt"
-	"sync"
-)
+import "fmt"
 
 func main() {
-	// var m sync.Map
-	// for i := 0; i < 10; i++ {
-	// 	m.Store(i, i+1)
-	// }
-	// if k, ok := m.Load(2); ok {
-	// 	fmt.Println(k.(int))
-	// }
-	// m.Range(func(k, v interface{}) bool {
-	// 	name, age := k.(int), v.(int)
-	// 	fmt.Println(name, age)
-	// 	return true
-	// })
-	var m sync.Map
-	if a, ok := m.Load(0); ok {
-		fmt.Println(a)
-	}
-
+	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	// 使用unsafe
+	// var arr = *(*[4]int)(unsafe.Pointer(&a[0]))
+	// fmt.Printf("%T\n", arr)   // result:[4]int
+	// 使用1.17特性
+	arr := (*[3]int)(a)
+	fmt.Printf("%T", arr) // result: *[4]int
 }
