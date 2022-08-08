@@ -1,10 +1,30 @@
 package main
 
-import "fmt"
+import (
+	"sync"
+)
+
+type test struct {
+	a int
+}
 
 func main() {
-	fmt.Println("测试1")
-	fmt.Println("测试2")
-	fmt.Println("测试3")
-	fmt.Println("测试分支的rebase")
+	var wg sync.WaitGroup
+	b := &test{
+		a: 10,
+	}
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(2)
+
+		go func(d int) {
+			defer wg.Done()
+			b.a = d
+		}(i)
+		go func() {
+			defer wg.Done()
+			b.a = 0
+		}()
+	}
+	wg.Wait()
 }
