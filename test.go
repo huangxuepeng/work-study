@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 )
 
@@ -10,21 +11,20 @@ type test struct {
 
 func main() {
 	var wg sync.WaitGroup
-	b := &test{
-		a: 10,
-	}
+	var l sync.Mutex
+	arr := []int{}
 
 	for i := 0; i < 1000; i++ {
-		wg.Add(2)
+		wg.Add(1)
 
 		go func(d int) {
 			defer wg.Done()
-			b.a = d
+			l.Lock()
+			defer l.Unlock()
+			arr = append(arr, d)
 		}(i)
-		go func() {
-			defer wg.Done()
-			b.a = 0
-		}()
+
 	}
 	wg.Wait()
+	fmt.Println(len(arr))
 }
