@@ -25,7 +25,7 @@ func main() {
 
 	for i := 0; i < 100; i++ {
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-		_, err = cli.Put(ctx, "/logagent/conf/", fmt.Sprintf("value", i))
+		_, err = cli.Put(ctx, fmt.Sprintf("/logagent/conf/%v", i), fmt.Sprintf("value%v", i))
 		cancel()
 		if err != nil {
 			fmt.Println("put failed, err:", err)

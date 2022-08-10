@@ -2,28 +2,39 @@ package main
 
 import (
 	"fmt"
-	"sync"
+	"os/exec"
 )
 
-var wg sync.WaitGroup
-
 func main() {
-
-	// 实现异步操作
-	// sum := <-test(2, 3)
-	// fmt.Println(sum)
-	test(2, 3, func(sum int) {
-		fmt.Println(sum)
-	})
+	cmd := exec.Command("/bin/sh", "./test.sh")
+	bytes, err := cmd.Output()
+	if err != nil {
+		fmt.Println("cmd.Output:", err)
+		return
+	}
+	fmt.Println(string(bytes))
 }
 
-func test(a, b int, call func(sum int)) {
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		sum := a + b
-		fmt.Println("1")
-		call(sum)
-	}()
-	wg.Wait()
-}
+// func solveEquation(equation string) string {
+// 	arr := strings.Split(equation, "=")
+// 	a, b := []byte(arr[0]), []byte(arr[1])
+
+// 	arr1, arr2 := []string{string(a[0])}, []string{string(b[0])}
+
+// 	for i := 1; i < len(a); i += 2 {
+// 		arr1 = append(arr1, string(a[i:i+2]))
+// 	}
+// 	for i := 1; i < len(b); i += 2 {
+// 		arr2 = append(arr2, string(b[i:i+2]))
+// 	}
+// 	d := map[string]int{}
+// 	for _, v := range arr1 {
+// 		if len(v) == 1 {
+// 			if v == "x" {
+// 				d["x"]++
+// 			} else {
+
+// 			}
+// 		}
+// 	}
+// }

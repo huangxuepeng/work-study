@@ -24,7 +24,7 @@ func main() {
 	defer cli.Close()
 
 	for true {
-		rch := cli.Watch(context.Background(), "/logagent/conf/") //阻塞在这里，如果没有key里没有变化，就一直停留在这里
+		rch := cli.Watch(context.Background(), "/logagent/conf/", clientv3.WithPrefix()) //阻塞在这里，如果没有key里没有变化，就一直停留在这里
 		for wresp := range rch {
 			for _, ev := range wresp.Events {
 				fmt.Printf("%s %q:%q\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
